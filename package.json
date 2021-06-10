@@ -1,0 +1,39 @@
+{
+  "name": "blueprints-modeler",
+  "version": "1.0.0",
+  "description": "Template for writing blueprints to FlowBuild",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest -i",
+    "test-watch": "jest --watch",
+    "export": "node ./src/export.js",
+    "deploy": "node ./src/deploy.js",
+    "validate": "node ./src/validate.js",
+    "compare": "node ./src/compare.js",
+    "pull": "node ./src/pull.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gustavo-fdte/blueprints-modeler.git"
+  },
+  "keywords": [],
+  "author": "Gustavo Capistrano Haramura",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gustavo-fdte/blueprints-modeler/issues"
+  },
+  "homepage": "https://github.com/gustavo-fdte/blueprints-modeler#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "console-table-printer": "^2.9.0",
+    "date-fns": "^2.22.1",
+    "dotenv-flow": "^3.2.0",
+    "jsum": "^1.0.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "jest": "^27.0.4",
+    "eslint": "^7.28.0",
+    "eslint-plugin-import": "^2.23.4"
+  }
+}
