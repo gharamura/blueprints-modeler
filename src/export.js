@@ -14,6 +14,7 @@ fs.readdir('blueprints', async (err, files) => {
     logger.error('Unable to find blueprints directory');
     process.exit(1);
   }
+
   const summary = [];
   files.forEach(async (file) => {
     if (path.extname(`../blueprints/${file}`) === '.js') {
@@ -38,15 +39,13 @@ fs.readdir('blueprints', async (err, files) => {
       };
     } if (path.extname(`../blueprints/${file}`) === '.json') {
       let bp;
-      fs.readFile(`blueprints/${file}`, async (error, data) => {
-        if (error)
-          throw error;
-        bp = JSON.parse(data);
 
-        fs.writeFileSync(`export/blueprints/${bp.name}.json`, JSON.stringify(bp, null, 2));
+      const data = fs.readFileSync(`blueprints/${file}`);
+      bp = JSON.parse(data);
 
-        logger.info(`Exporting ${file} to ${bp.name}.json!`);
-      });
+      fs.writeFileSync(`export/blueprints/${bp.name}.json`, JSON.stringify(bp, null, 2));
+
+      logger.info(`Exporting ${file} to ${bp.name}.json!`);
 
       summary.push({
         name: bp.name,
@@ -64,5 +63,6 @@ fs.readdir('blueprints', async (err, files) => {
     }
   });
 
+  logger.info(`Saving summary`);
   fs.writeFileSync('download/me/summary.json', JSON.stringify(summary, null, 2));
 });
