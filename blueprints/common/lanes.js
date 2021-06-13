@@ -10,7 +10,26 @@ const lanes = [
     id: "authenticated",
     name: "checks if actor data has claim authenticated",
     rule: lisp.validate_claim('authenticated')
-  } 
+  },
+  {
+    id: "actorId",
+    name: "restricted",
+    rule: ["fn", ["actor_data", "bag"],["=",
+      ["get", ["get", "bag", ["`", "is_authorized"]],["`","id"]],
+      ["get", "actor_data",["`","id"]]
+    ]
+    ]
+  },
+  {
+    id: "simpleton",
+    name: "simpleton",
+    rule: lisp.validate_claim("simpleton"),
+  },
+  {
+    id: "admin",
+    name: "admin",
+    rule: lisp.validate_claim("admin"),
+  },
 ]
 
 const getLanes = (nodes) => {
