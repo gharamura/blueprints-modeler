@@ -15,14 +15,14 @@ const nodes = [
       input_schema: {}
     },
     next: "2",
-    lane_id: "everyone"
+    lane_id: "anyone"
   },
   {
     id: "2",
     type: "ScriptTask",
     name: "Create values for bag",
     next: "3",
-    lane_id: "everyone",
+    lane_id: "anyone",
     parameters: {
       input: {},
       script: {
@@ -44,7 +44,7 @@ const nodes = [
     category: "SetToBag",
     name: "Set values on bag",
     next: "2",
-    lane_id: "everyone",
+    lane_id: "anyone",
     parameters: {
       input: {
         example: {"$ref": "result.example"},
@@ -57,7 +57,7 @@ const nodes = [
     type: "Finish",
     name: "Finish Max Step Number Example",
     next: null,
-    lane_id: "everyone"
+    lane_id: "anyone"
   }
 ]
 
