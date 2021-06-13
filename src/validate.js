@@ -15,41 +15,51 @@ fs.readdir("export/blueprints", async (err, files) => {
     logger.error("Unable to find blueprints directory");
     process.exit(1);
   }
-
   
+  let token;
+
   try {
     logger.debug("get token");
-    const token = await getToken('123',["me"]);
+    token = await getToken('123',["me"]);
     logger.info('token acquired');
-
-    await files.forEach(async (file) => {    
-      if (path.extname(`../export/blueprints/${file}`) === ".json") {
-        fs.readFile(`export/blueprints/${file}`, "utf8", async (err, data) => {
-          let content = JSON.parse(data);
-  
-          try{
-      
-            const response = await requests.validateBlueprint(content, { environment: ENVIRONMENT, token })
-            
-            if(response.status === 200) {
-              logger.info('[%s] is valid', file.toString().trim());
-            } else {
-              logger.error('[%s] invalid, message: %s', file.toString().trim(), response.data.message);
-              process.exit(1)
-            }           
-      
-          } catch(e) {
-      
-            logger.error('error: %s', e);
-            process.exit(1)
-      
-          }
-        });
-      }
-    });
-
   } catch (e) {
     logger.error("unable to get token")
     process.exit(1)
   }
+
+  const promises = files.map(async (file) => {
+    if (path.extname(`../export/blueprints/${file}`) === ".json") {
+      const data = fs.readFileSync(`export/blueprints/${file}`, "utf8") 
+      let content = JSON.parse(data);
+      const validation = await requests.validateBlueprint(content, { environment: ENVIRONMENT, token })          
+        
+      return {
+        file,
+        validation
+      }
+    }
+  }
+  );
+
+  const validations = await Promise.allSettled(promises)
+
+  let errors;
+
+  validations.map(item => {
+    const response = item.value;
+    if(response?.validation?.status === 200) {
+      logger.info('[%s] is valid', response.file.toString().trim());
+    } else {
+      logger.error('[%s] invalid, message: %s', response.file.toString().trim(), response.validation.data.message);
+      errors = true
+    }
+  })
+
+  if(errors) {
+    logger.warn("Validation problem")
+    process.exit(1)
+  } else {
+    logger.info("Validation Sucessful")
+  }
+
 });
