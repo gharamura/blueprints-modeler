@@ -1,7 +1,21 @@
 # blueprints-modeler
 
 This repo is a suggested template for writing blueprints for FlowBuild.
-The blueprints should be saved on the blueprints folder, using .json or .js files.
+
+There are 3 ways you can organize your blueprints.
+- You can save a json file according to the structure of a flowbuild blueprint.
+- You can save a js file, keeping all the structure of a flowbuild blueprint, but leveraging on some quality-of-life features you can have when using js.
+- You can save a js file, but referencing a pre-defined nodeSpec. This situation allows you to reuse node specs instead of having to rewrite the same data over and over.
+
+Always save your blueprints files in the ```blueprints``` folder.
+
+## Examples
+
+There are several examples in the blueprints folder, showcasing different situations.
+
+- multipleFinish.example.json: shows a fully json file.
+- *.example.js: several examples of blueprints using js files.
+- *.example.nodes.js: those files shows some cases on how to build blueprints from nodeSpecs.
 
 ## Scripts 
 
