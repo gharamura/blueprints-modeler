@@ -1,4 +1,4 @@
-const { getLanes } = require('./common/lanes')
+const { getLanes } = require("../lanes/lanes");
 
 const name = 'bag_example'
 const description = 'Exemplo demonstrando o uso do nó tipo setToBag'
