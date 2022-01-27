@@ -1,4 +1,4 @@
-const { getLanes } = require('./common/lanes')
+const { getLanes } = require("../lanes/lanes");
 
 const name = 'user_task_example'
 const description = ''

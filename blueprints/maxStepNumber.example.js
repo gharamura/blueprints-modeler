@@ -1,4 +1,4 @@
-const { getLanes } = require('./common/lanes');
+const { getLanes } = require("../lanes/lanes");
 
 const parameters = {
   max_step_number: 20

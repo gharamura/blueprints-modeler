@@ -1,4 +1,4 @@
-const { getLanes } = require('./common/lanes')
+const { getLanes } = require("../lanes/lanes");
 
 const name = 'sub_process_parent_example'
 const description = ''

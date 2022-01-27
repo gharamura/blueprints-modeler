@@ -1,4 +1,4 @@
-const { getLanes } = require('./common/lanes')
+const { getLanes } = require("../lanes/lanes");
 
 const name = 'sub_process_son_example'
 const description = 'The finish node has parameters that will be transmitted to the parent process'

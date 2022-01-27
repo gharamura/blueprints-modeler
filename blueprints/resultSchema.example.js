@@ -1,4 +1,4 @@
-const { getLanes } = require('./common/lanes')
+const { getLanes } = require("../lanes/lanes");
 
 const name = 'result_schema_example'
 const description = 'Result schema prevents the process from continue if the result is different. It can be applied on any node type.'

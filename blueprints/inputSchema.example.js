@@ -1,76 +1,21 @@
-const { getLanes } = require('./common/lanes')
+const { getLanes } = require("../lanes/lanes");
+const { getNodes } = require("../nodes/index");
 
-const startSchema = {
-  type: "object",
-  properties: {
-    id: { type: "string", format: "uuid" },
-    dataInicio: { type: "string", format: "date-time" },
-    dataFim: { type: "string", format: "date" },
-    nome: { type: "string", minLength: 3 },
-    email: { type: "string", format: "email" },
-    animal: { type: "string", enum: ["cachorro", "gato"] },
-    idade: { type: "number" },
-    lista: { type: "array", items: { type: "string" } },
-    endereco: {
-      type: "object",
-      properties: {
-        logradouro: { type: "string" },
-        numero: { type: "number" }
-      }
-    },
-    contatos: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          nome: { type: "string" },
-          telefone: { type: "string", pattern: '(\\(?\\d{2}\\)?\\s)?(\\d{4,5}\\-\\d{4})' }
-        }
-      }
-    }
-  },
-  required: ["dataInicio"]
-}
+const name = "input_schema_example";
+const description = "input schema example";
 
 const nodes = [
   {
-    id: "1",
-    type: "Start",
+    nodeSpec: "exampleStartSchema",
+    next: "SCRIPT",
     name: "Start inputSchema Example",
-    parameters: {
-      input_schema: startSchema
-    },
-    next: "2",
-    lane_id: "anyone"
   },
   {
-    id: "2",
-    type: "ScriptTask",
-    name: "Create values for bag",
-    next: "3",
-    lane_id: "anyone",
-    parameters: {
-      input: {},
-      script: {
-        package: "",
-        function: [
-          "fn",
-          ["&", "args"],
-          {
-            example: "bag_example",
-            value: "bag_value",
-          },
-        ],
-      },
-    }
+    nodeSpec: "exampleScript",
+    next: "BAG-DATA"
   },
   {
-    id: "3",
-    type: "SystemTask",
-    category: "SetToBag",
-    name: "bag values",
-    next: "4",
-    lane_id: "anyone",
+    nodeSpec: "exampleBag",
     parameters: {
       input: {
         example: { "$ref": "result.example" },
@@ -79,22 +24,18 @@ const nodes = [
     }
   },
   {
-    id: "4",
-    type: "Finish",
-    name: "Finish inputSchema Example",
-    next: null,
-    lane_id: "anyone"
+    nodeSpec: "exampleFinish"
   }
 ]
 
 module.exports = {
-  name: 'input_schema_example',
-  description: '',
+  name: name,
+  description: description,
   blueprint_spec: {
     requirements: ["core"],
     prepare: [],
-    nodes,
-    lanes: getLanes(nodes),
+    nodes: getNodes(nodes),
+    lanes: getLanes(getNodes(nodes)),
     environment: {},
-  }
-}
+  },
+};

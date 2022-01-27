@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const JSum = require('jsum');
-const { logger } = require('./utils/logger');
+const { logger } = require('../utils/logger');
 
 if (!fs.existsSync('export')) { fs.mkdirSync('export'); }
 if (!fs.existsSync('export/blueprints')) { fs.mkdirSync('export/blueprints'); }
@@ -17,9 +17,9 @@ fs.readdir('blueprints', async (err, files) => {
 
   const summary = [];
   files.forEach(async (file) => {
-    if (path.extname(`../blueprints/${file}`) === '.js') {
-      const scriptName = path.basename(`../blueprints/${file}`, '.js');
-      const spec = require(`../blueprints/${scriptName}`);
+    if (path.extname(`../../blueprints/${file}`) === '.js') {
+      const scriptName = path.basename(`../../blueprints/${file}`, '.js');
+      const spec = require(`../../blueprints/${scriptName}`);
       fs.writeFileSync(`export/blueprints/${spec.name}.json`, JSON.stringify(spec, null, 2));
 
       logger.info(`Exporting ${file} to ${spec.name}.json!`);

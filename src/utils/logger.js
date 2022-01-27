@@ -1,19 +1,15 @@
-const {
-  createLogger, format, transports, config,
-} = require('winston');
+const { createLogger, format, transports, config } = require("winston");
 
 const logger = createLogger({
-  level: 'debug',
+  level: "debug",
   levels: config.npm.levels,
   format: format.combine(
     format.padLevels(),
+    format.timestamp({ format: "DD/MM/YYYY HH:mm:ss" }),
     format.colorize(),
-    format.splat(),
-    format.simple(),
+    format.printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}`)
   ),
-  transports: [
-    new transports.Console(),
-  ],
+  transports: [new transports.Console()],
   exceptionHandlers: [
     new transports.Console({
       format: format.errors(),
